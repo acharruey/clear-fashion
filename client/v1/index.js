@@ -44,7 +44,7 @@ const CHEAPEST_T_SHIRT = [{
 }];
 
 console.table(CHEAPEST_T_SHIRT);
-console.log(CHEAPEST_T_SHIRT[0]);
+console.log(CHEAPEST_T_SHIRT);
 
 /**
  * 👕
@@ -58,6 +58,9 @@ console.log(CHEAPEST_T_SHIRT[0]);
 // 🎯 TODO: Number of products
 // 1. Create a variable and assign it the number of products
 // 2. Log the variable
+
+const lenMarketPlace = marketplace.length;
+console.log(lenMarketPlace)
 
 
 // 🎯 TODO: Brands name
