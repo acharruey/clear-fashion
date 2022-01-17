@@ -60,13 +60,23 @@ console.log(CHEAPEST_T_SHIRT);
 // 2. Log the variable
 
 const lenMarketPlace = marketplace.length;
-console.log(lenMarketPlace)
+console.log(lenMarketPlace);
 
 
 // 🎯 TODO: Brands name
 // 1. Create a variable and assign it the list of brands name only
 // 2. Log the variable
 // 3. Log how many brands we have
+
+let brands = []
+for(let i = 0 ; i<marketplace.length ; i++){
+  if(!brands.includes(marketplace[i].brand)){
+    brands.push(marketplace[i].brand);
+  }
+}
+
+console.log(brands);
+console.log(brands.length);
 
 
 // 🎯 TODO: Sort by price
