@@ -32,9 +32,19 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // I can find on these e-shops
 // 2. Log the variable
 
+const CHEAPEST_T_SHIRT = [{
+  'brand': 'Hopaal',
+  'url': 'https://hopaal.com/collections/t-shirts-homme/products/classique-noir-t-shirt-homme?variant=39629285949624'
+}, {
+  'brand': 'Loom',
+  'url': 'https://www.loom.fr/products/le-t-shirt'
+}, {
+  'brand': 'ADRESSE',
+  'url': 'https://adresse.paris/t-shirts-et-polos/3983-t-shirt-ranelagh-1300000259194.html'
+}];
 
-
-
+console.table(CHEAPEST_T_SHIRT);
+console.log(CHEAPEST_T_SHIRT[0]);
 
 /**
  * 👕
