@@ -44,7 +44,6 @@ const CHEAPEST_T_SHIRT = [{
 }];
 
 console.table(CHEAPEST_T_SHIRT);
-console.log(CHEAPEST_T_SHIRT);
 
 /**
  * 👕
@@ -84,17 +83,27 @@ console.log(brands.length);
 // 2. Create a variable and assign it the list of products by price from lowest to highest
 // 3. Log the variable
 
-/*
-function SortProducts(market){
-  let first = market[]
-}
-*/
+let market_sorted_prices = marketplace.slice();
+market_sorted_prices.sort((a1, a2) => 
+	a1.price < a2.price ?  -1 : 
+		a1.price === a2.price ?  0 : 1);
+
+console.table(market_sorted_prices);
 
 
 // 🎯 TODO: Sort by date
 // 1. Create a function to sort the marketplace objects by products date
 // 2. Create a variable and assign it the list of products by date from recent to old
 // 3. Log the variable
+
+let market_sorted_dates = marketplace.slice();
+
+market_sorted_dates.sort((a1, a2) => 
+	a1.date < a2.date ?  -1 : 
+		a1.date === a2.date ?  0 : 1);
+console.table(market_sorted_dates);
+
+
 
 
 // 🎯 TODO: Filter a specific price range
