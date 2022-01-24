@@ -111,10 +111,32 @@ console.table(market_sorted_dates);
 // 2. Log the list
 
 
+let products_50_100 = new Array();
+market_sorted_prices.forEach(article =>
+{
+	if (article.price >= 50 && article.price <= 100)
+	{products_50_100.push(article);}
+});
+console.table(products_50_100);
+
+
+
+
+
 // 🎯 TODO: Average Basket
 // 1. Determine the average basket of the marketplace
 // 2. Log the average
 
+
+
+function mean(market)
+{
+	let m = 0;
+	market.forEach(article => m += article.price);
+	return m / market.length;
+}
+
+console.log(`Average basket of marketplace : ${mean(marketplace).toFixed(2)}€`);
 
 
 
@@ -143,9 +165,55 @@ console.table(market_sorted_dates);
 // 3. Log the number of products by brands
 
 
+
+
+let brands = {};
+
+marketplace.forEach(article => 
+{ 
+	if (!brands[article.brand]) 
+	{brands[article.brand] = [];}
+
+	let props = {};
+	Object.keys(article).slice(1).forEach(prop => props[prop] = article[prop]);
+
+	brands[article.brand].push(props);
+});
+
+Object.keys(brands).forEach(brand => 
+{
+	console.log(brand);
+	console.table(brands[brand]);
+});
+
+let nb_products = {};
+
+Object.keys(brands).forEach(brand => nb_products[brand] = brands[brand].length);
+console.table(nb_products);
+
+
+
+
+
+
 // 🎯 TODO: Sort by price for each brand
 // 1. For each brand, sort the products by price, from highest to lowest
 // 2. Log the sort
+
+
+
+let brands_sort_price = JSON.parse(JSON.stringify(brands));
+
+Object.keys(brands_sort_price).forEach(brand => brands_sort_price[brand].sort((a1, a2) => 
+	a1.price < a2.price ?  1 : 
+		a1.price === a2.price ?  0 : -1));
+
+Object.keys(brands_sort_price).forEach(brand => 
+{
+	console.log(brand);
+	console.table(brands_sort_price[brand]);
+});	
+
 
 
 // 🎯 TODO: Sort by date for each brand
@@ -153,7 +221,17 @@ console.table(market_sorted_dates);
 // 2. Log the sort
 
 
+let brands_sort_date = JSON.parse(JSON.stringify(brands));
 
+Object.keys(brands_sort_date).forEach(brand => brands_sort_date[brand].sort((a1, a2) => 
+	a1.date < a2.date ?  1 : 
+		a1.date === a2.date ?  0 : -1));
+
+Object.keys(brands_sort_date).forEach(brand => 
+{
+	console.log(brand);
+	console.table(brands_sort_date[brand]);
+});
 
 
 /**
