@@ -247,6 +247,18 @@ Object.keys(brands_sort_date).forEach(brand =>
 
 
 
+let p90_map = {};
+
+Object.keys(brands_sort_price).forEach(brand =>
+{
+	const n90 = Math.ceil(brands_sort_price[brand].length*0.9);
+	p90_map[brand] = { 'P90 price value' : brands_sort_price[brand][n90].price + ' €'};
+
+});
+console.table(p90_map);
+
+
+
 
 
 /**
@@ -322,9 +334,51 @@ const COTELE_PARIS = [
 // // A new product is a product `released` less than 2 weeks.
 
 
+
+let cotele_sort_date = COTELE_PARIS.slice();
+cotele_sort_date.sort((a1,a2) => 
+	a1.released < a2.released ?  1 : 
+		a1.released === a2.released ?  0 : -1);
+
+const max_date = new Date(cotele_sort_date[0].released);
+const min_date = new Date(cotele_sort_date.slice(-1)[0].released);
+
+const one_day = 24 * 60 * 60 * 1000;
+const diff = (max_date - min_date) / one_day;
+let check = diff < 15;
+console.log(check);
+console.log(check ?
+	'Assuming that today is the most recent product\'s released date, the difference \
+between today and the oldest product\'s released date is less than 2 weeks : only\
+ ' + diff + ' days, so we have only new released products' :
+	'More than 2 weeks separate the newest and the oldest product of the list ' + diff + ' days, \
+so we cannot have only new released products, even if today was the \
+most recent product\'s released date');
+
+
+
+
+
 // 🎯 TODO: Reasonable price
 // // 1. Log if coteleparis is a reasonable price shop (true or false)
 // // A reasonable price if all the products are less than 100€
+
+
+
+check = true;
+COTELE_PARIS.forEach(article =>
+{
+	if (article.price >= 100)
+	{ check = false; }
+});
+console.log(check);
+console.log(check ?
+	'All the articles are under 100€, it\'s a reasonable price shop' :
+	'Some articles are more expensive than 100€, it\'s not a reasonable price shop');
+
+
+
+
 
 
 // 🎯 TODO: Find a specific product
@@ -332,9 +386,34 @@ const COTELE_PARIS = [
 // 2. Log the product
 
 
+
+
+let product_expected;
+COTELE_PARIS.forEach(article => 
+{
+	if (article.uuid === 'b56c6d88-749a-5b4c-b571-e5b5c6483131')
+	{product_expected = article}
+});
+console.table(product_expected);
+
+
+
+
+
+
+
 // 🎯 TODO: Delete a specific product
 // 1. Delete the product with the uuid `b56c6d88-749a-5b4c-b571-e5b5c6483131`
 // 2. Log the new list of product
+
+
+
+const index_remove = COTELE_PARIS.indexOf(product_expected);
+COTELE_PARIS.splice(index_remove, 1)
+console.table(COTELE_PARIS);
+
+
+
 
 // 🎯 TODO: Save the favorite product
 let blueJacket = {
@@ -342,6 +421,15 @@ let blueJacket = {
   'price': 110,
   'uuid': 'b4b05398-fee0-4b31-90fe-a794d2ccfaaa'
 };
+
+
+
+blueJacket.name = 'BLUE JACKET';
+blueJacket.released = new Date().toISOString().slice(0, 10);
+COTELE_PARIS.push(blueJacket);
+console.table(COTELE_PARIS);
+
+
 
 // we make a copy of blueJacket to jacket
 // and set a new property `favorite` to true
@@ -352,6 +440,17 @@ jacket.favorite = true;
 // 1. Log `blueJacket` and `jacket` variables
 // 2. What do you notice?
 
+
+console.log('Blue jacket');
+console.table(blueJacket);
+
+console.log('Jacket');
+console.table(jacket);
+
+console.log('Both blueJacket and jacket have favorite as property');
+
+
+
 blueJacket = {
   'link': 'https://coteleparis.com/collections/tous-les-produits-cotele/products/la-veste-bleu-roi',
   'price': 110,
@@ -360,6 +459,17 @@ blueJacket = {
 
 // 3. Update `jacket` property with `favorite` to true WITHOUT changing blueJacket properties
 
+jacket = {};
+Object.keys(blueJacket).forEach(prop => jacket[prop] = blueJacket[prop]);
+jacket.favorite = true;
+
+console.log('Blue jacket');
+console.table(blueJacket);
+
+console.log('Jacket');
+console.table(jacket);
+
+console.log('Now we notice jacket has a favorite property while blueJacket doesn\'t.');
 
 
 
@@ -373,3 +483,5 @@ blueJacket = {
 // 🎯 TODO: Save in localStorage
 // 1. Save MY_FAVORITE_BRANDS in the localStorage
 // 2. log the localStorage
+localStorage.object = JSON.stringify(MY_FAVORITE_BRANDS);
+console.table(JSON.parse(localStorage.object));
