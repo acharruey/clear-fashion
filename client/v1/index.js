@@ -167,7 +167,7 @@ console.log(`Average basket of marketplace : ${mean(marketplace).toFixed(2)}€`
 
 
 
-let brands = {};
+brands = {};
 
 marketplace.forEach(article => 
 { 
