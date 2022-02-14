@@ -201,7 +201,7 @@ console.table(nb_products);
 // 1. For each brand, sort the products by price, from highest to lowest
 // 2. Log the sort
 
-
+console.log('Sort by price for each brand');
 
 let brands_sort_price = JSON.parse(JSON.stringify(brands));
 
