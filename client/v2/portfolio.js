@@ -116,6 +116,12 @@ selectShow.addEventListener('change', async (event) => {
   render(currentProducts, currentPagination);
 });
 
+selectPage.addEventListener('change', event => {
+  fetchProducts(parseInt(event.target.value), currentPagination.pageCount)
+    .then(setCurrentProducts)
+    .then(() => render(currentProducts, currentPagination));
+})
+
 document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
 
