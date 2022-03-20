@@ -186,3 +186,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   setCurrentProducts(products);
   render(currentProducts, currentPagination);
 });
+
+/**
+ * Select the new released products (less than 2 weeks)
+ */
+
+ document.getElementById('recent_released').addEventListener('click', function () {
+  currentProducts.forEach(obj => {
+    obj.new=true
+    if((new Date()-new Date(obj.released)) > (24*60*60*1000*14)){
+      obj.new=false;
+    }
+  })
+  currentProducts=currentProducts.filter(obj => obj.new === true)
+  render(currentProducts, currentPagination);
+});
