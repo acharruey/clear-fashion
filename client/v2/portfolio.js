@@ -145,7 +145,6 @@ const render = (products, pagination) => {
       }
       render(currentProducts, currentPagination)
     });
-    selectSort.value="no-filter"
 };
 
 
@@ -200,6 +199,9 @@ selectBrand.addEventListener('change', event => {
       break;
     case 'date-desc':
       currentProducts=currentProducts.sort((x,y)=> new Date(x.released)-new Date(y.released))
+      break;
+    case 'no-filter':
+      refresh()
       break;
   }
   renderProducts(currentProducts,currentPagination)
