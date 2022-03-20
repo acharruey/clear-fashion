@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Select the new released products (less than 2 weeks)
+ * Select the newly released products (less than 2 weeks)
  */
 
  document.getElementById('recent_released').addEventListener('click', function () {
@@ -201,3 +201,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentProducts=currentProducts.filter(obj => obj.new === true)
   render(currentProducts, currentPagination);
 });
+
+
+/**
+ * Select the products that have a reasonable price (less than 50€)
+ */
+
+ document.getElementById('reasonable_price').addEventListener('click', function () {
+  currentProducts=currentProducts.filter(obj => obj.price < 50.0)
+  render(currentProducts, currentPagination);
+}); 
