@@ -196,8 +196,10 @@ selectBrand.addEventListener('change', event => {
       currentProducts=currentProducts.sort((x,y)=> x.price-y.price).reverse()
       break;
     case 'date-asc':
+      currentProducts=currentProducts.sort((x,y)=> new Date(x.released)-new Date(y.released)).reverse()
       break;
     case 'date-desc':
+      currentProducts=currentProducts.sort((x,y)=> new Date(x.released)-new Date(y.released))
       break;
   }
   renderProducts(currentProducts,currentPagination)
