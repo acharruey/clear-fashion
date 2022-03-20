@@ -10,6 +10,7 @@ let currentBrand = "";
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const selectBrand = document.querySelector('#brand-select');
+const selectSort = document.querySelector('#sort-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 
@@ -144,6 +145,7 @@ const render = (products, pagination) => {
       }
       render(currentProducts, currentPagination)
     });
+    selectSort.value="no-filter"
 };
 
 
@@ -176,6 +178,29 @@ selectPage.addEventListener('change', event => {
 selectBrand.addEventListener('change', event => {
    currentBrand=event.target.value
    refresh()
+});
+
+
+/**
+ * Sort the products to display
+ * @type {[type]}
+ */
+ selectSort.addEventListener('change', event => {
+  switch(event.target.value){
+    default:
+      break;
+    case 'price-asc':
+      currentProducts=currentProducts.sort((x,y)=> x.price-y.price)
+      break;
+    case 'price-desc':
+      currentProducts=currentProducts.sort((x,y)=> x.price-y.price).reverse()
+      break;
+    case 'date-asc':
+      break;
+    case 'date-desc':
+      break;
+  }
+  renderProducts(currentProducts,currentPagination)
 });
 
 
