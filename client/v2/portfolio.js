@@ -4,10 +4,12 @@
 // current products on the page
 let currentProducts = [];
 let currentPagination = {};
+let currentBrand = "";
 
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
+const selectBrand = document.querySelector('#brand-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
 
@@ -86,6 +88,32 @@ const renderPagination = pagination => {
   selectPage.selectedIndex = currentPage - 1;
 };
 
+
+/**
+ * Render brand selector
+ * @param  {Object} brand
+ */
+ const renderBrands = products => {
+  const brand=[];
+  const options = products.map(obj => {
+    if (!brand.includes(obj.brand)){
+      brand.push(obj.brand);
+      return `<option value="${obj.brand}" ${currentBrand===obj.brand ? "selected" : ""}>${obj.brand}</option>`
+    }
+  });
+
+  options.unshift(`<option value="">All brands</option>`)
+
+  selectBrand.innerHTML = options.join('')
+
+  if(currentBrand===""){
+    selectBrand.selectedIndex = 0
+  }
+};
+
+
+
+
 /**
  * Render page selector
  * @param  {Object} pagination
@@ -100,27 +128,57 @@ const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
   renderIndicators(pagination);
+  renderBrands(products)
 };
 
 /**
  * Declaration of all Listeners
  */
 
+ function refresh(){
+  fetchProducts(currentPagination.currentPage, currentPagination.pageSize)
+    .then(setCurrentProducts)
+    .then(() => {
+      if(currentBrand!==""){
+        currentProducts=currentProducts.filter(obj => obj.brand === currentBrand)
+      }
+      render(currentProducts, currentPagination)
+    });
+};
+
+
+
 /**
  * Select the number of products to display
  */
-selectShow.addEventListener('change', async (event) => {
-  const products = await fetchProducts(currentPagination.currentPage, parseInt(event.target.value));
-
-  setCurrentProducts(products);
-  render(currentProducts, currentPagination);
+selectShow.addEventListener('change', event => {
+  currentPagination.pageSize=parseInt(event.target.value);
+  currentPagination.currentPage=1;
+  refresh();
 });
 
+
+
+/**
+ * Select the page to display
+ * @type {[type]}
+ */
 selectPage.addEventListener('change', event => {
-  fetchProducts(parseInt(event.target.value), currentPagination.pageCount)
-    .then(setCurrentProducts)
-    .then(() => render(currentProducts, currentPagination));
+  currentPagination.currentPage=parseInt(event.target.value);
+  refresh()
 })
+
+/**
+ * Select the brand of products to display
+ * @type {[type]}
+ */
+
+selectBrand.addEventListener('change', event => {
+   currentBrand=event.target.value
+   refresh()
+});
+
+
 
 document.addEventListener('DOMContentLoaded', async () => {
   const products = await fetchProducts();
