@@ -6,6 +6,7 @@ let currentProducts = [];
 let currentPagination = {};
 let currentBrand = "";
 let favoriteProducts = [];
+let FavoriteChecked = false;
 
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
@@ -302,3 +303,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentProducts=currentProducts.filter(obj => obj.price < 50.0)
   render(currentProducts, currentPagination);
 }); 
+
+
+/**
+ * Select my favorite products 
+ */
+ document.getElementById('fav_products').addEventListener('click', function () {
+  currentProducts=currentProducts.filter(obj=>obj.favorite===true)
+  render(currentProducts,currentPagination)
+});
