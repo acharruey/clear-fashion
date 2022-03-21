@@ -5,6 +5,7 @@
 let currentProducts = [];
 let currentPagination = {};
 let currentBrand = "";
+let favoriteProducts = [];
 
 // instantiate the selectors
 const selectShow = document.querySelector('#show-select');
@@ -67,6 +68,26 @@ const fetchProducts = async (page = 1, size = 12) => {
 
 
 /**
+ * Check favorites
+ */
+
+ function favProd(id_prod){
+  const product=currentProducts.find(obj => {
+    return obj.uuid === id_prod
+  })
+  const id= currentProducts.indexOf(product)
+  currentProducts[id].favorite =!product.favorite
+  if(currentProducts[id].favorite){
+    favoriteProducts.push(currentProducts[id])
+  }
+  else{favoriteProducts=favoriteProducts.filter(obj => obj.uuid !== id_prod)  }
+  render(currentProducts,currentPagination)
+}
+
+
+
+
+/**
  * Render list of products
  * @param  {Array} products
  */
@@ -80,6 +101,8 @@ const renderProducts = products => {
         <span>${product.brand}</span>
         <a href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
+        <input type="checkbox" onclick="favProd('${product.uuid}')"${product.favorite ? "checked" : ""}>
+        <label for="favorite-product">Add to favorite</label>
       </div>
     `;
     })
@@ -162,6 +185,9 @@ const render = (products, pagination) => {
   fetchProducts(currentPagination.currentPage, currentPagination.pageSize)
     .then(setCurrentProducts)
     .then(() => {
+      updateFavProd()
+    })
+    .then(() => {
       if(currentBrand!==""){
         currentProducts=currentProducts.filter(obj => obj.brand === currentBrand)
       }
@@ -169,6 +195,19 @@ const render = (products, pagination) => {
     });
     selectSort.value="no-filter"
 };
+
+
+/**
+ * Update the products list with favorites to keep them while changing the page
+ */
+ function updateFavProd(){
+  const prods = currentProducts.map(obj => {
+    const fav=favoriteProducts.find(favobj => favobj.uuid === obj.uuid)
+    if(fav){obj.favorite=true}
+    return obj
+  })
+  currentProducts=prods
+}
 
 
 
