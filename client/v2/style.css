@@ -1,0 +1,21 @@
+body{
+    margin: 0 auto;
+    max-width: 50em;
+    font-family: "Helvetica", "Arial", "sans-serif";
+    line-height: 1.5;
+    padding: 4em 1em;
+    color: rgb(15, 3, 3);
+    text-align : center;
+}
+h2 {
+    margin-top: 1em;
+    padding-top: 1em;
+}
+h2,
+h3,
+strong {
+    color: #11f03683;
+}
+a{
+    color: #0c1adb
+}

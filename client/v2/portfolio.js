@@ -99,9 +99,12 @@ const renderProducts = products => {
     .map(product => {
       return `
       <div class="product" id=${product.uuid}>
-        <span>${product.brand}</span>
+        <span>Brand :</span>
+        <strong>${product.brand}</strong>
+        <span>Link :</span>
         <a href="${product.link}" target="_blank">${product.name}</a>
-        <span>${product.price}</span>
+        <span>Price :</span>
+        <strong>${product.price} €</strong>
         <input type="checkbox" onclick="favProd('${product.uuid}')"${product.favorite ? "checked" : ""}>
         <label for="favorite-product">Add to favorite</label>
       </div>
