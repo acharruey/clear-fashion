@@ -1,73 +1,57 @@
 /* eslint-disable no-console, no-process-exit */
 const dedicatedbrand = require('./sites/dedicatedbrand');
-
+const savedProducts = require('./products.json');
+const fs = require('fs');
 //const db = require('./db');
 
-async function sandbox () {
-  try {
-    let products = [];
-    let pages = [
-      'https://www.dedicatedbrand.com/en/men/basics',
-      'https://www.dedicatedbrand.com/en/men/sale'
-    ];
-
-    console.log(`🕵️‍♀️  browsing ${pages.length} pages with for...of`);
-
-    // Way 1 with for of: we scrape page by page
-    for (let page of pages) {
-      console.log(`🕵️‍♀️  scraping ${page}`);
-
-      let results = await dedicatedbrand.scrape(page);
-
-      console.log(`👕 ${results.length} products found`);
-
-      products.push(results);
-    }
-
-    pages = [
-      'https://www.loom.fr/collections/hauts-homme',
-      'https://www.loom.fr/collections/bas-homme'
-    ];
-
-    console.log('\n');
-
-    console.log(`🕵️‍♀️  browsing ${pages.length} pages with Promise.all`);
-
-    const promises = pages.map(page => loom.scrape(page));
-    const results = await Promise.all(promises);
-
-    console.log(`👕 ${results.length} results of promises found`);
-    console.log(`👕 ${results.flat().length} products found`);
-
-    console.log(results);
-    console.log(results.flat());
-
-    products.push(results.flat());
-    products = products.flat();
-
-    console.log('\n');
-
-    console.log(`👕 ${products.length} total of products found`);
-
-    console.log('\n');
-
-    const result = await db.insert(products);
-
-    console.log(`💽  ${result.insertedCount} inserted products`);
-
-    console.log('\n');
-
-    console.log('💽  Find Loom products only');
-
-    const loomOnly = await db.find({'brand': 'loom'});
-
-    console.log(`👕 ${loomOnly.length} total of products found for Loom`);
-    console.log(loomOnly);
-
-    db.close();
-  } catch (e) {
-    console.error(e);
-  }
+const links = {
+  'dl': 'https://www.dedicatedbrand.com/en/men/all-men'
 }
 
-sandbox();
+async function sandbox (eshop) {
+  try {
+
+    console.log(`🕵️‍♀️ browsing listed sources`);
+    const products = await dedicatedbrand.scrape(links['dl']);
+    const all_products = products;
+
+    let today = (new Date()).toLocaleDateString('fr-FR');
+
+    for (let i = 0; i < all_products.length; i++) {
+      all_products[i].date = today;
+      let alreadyExist = false;
+      for (let j = 0; j < savedProducts.length && alreadyExist == false; j++) {
+        if ((all_products[i].name == savedProducts[j].name) && (all_products[i].price == savedProducts[j].price)) {
+          alreadyExist = true;
+        }
+      }
+
+      if (alreadyExist != true && all_products[i].price!=null) {
+        savedProducts.push(all_products[i]);
+      }
+    }
+
+    for (let i = 0; i < savedProducts.length; i++) {
+      let alreadyExist = false;
+      for (let j = 0; j < all_products.length && alreadyExist == false; j++) {
+        if ((all_products[j].name == savedProducts[i].name) && (all_products[j].price == savedProducts[i].price)) {
+          alreadyExist = true;
+        }
+      }
+      if (alreadyExist == false) {
+        savedProducts.splice(i, 1);
+      }
+    }
+
+
+    fs.writeFileSync("./products.json", JSON.stringify(savedProducts, null, 4));
+
+    console.log('done');
+    process.exit(0);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+}
+const [, , eshop] = process.argv;
+sandbox(eshop);
