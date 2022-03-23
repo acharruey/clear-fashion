@@ -10,7 +10,6 @@ const links = {
 
 async function sandbox (eshop) {
   try {
-
     console.log(`🕵️‍♀️ browsing listed sources`);
     const products = await dedicatedbrand.scrape(links['dl']);
     const all_products = products;
