@@ -1,18 +1,24 @@
 /* eslint-disable no-console, no-process-exit */
 const dedicatedbrand = require('./sites/dedicatedbrand');
+const montlimartbrand = require('./sites/montlimartbrand');
+const adressebrand = require('./sites/adressebrand');
 const savedProducts = require('./products.json');
 const fs = require('fs');
 //const db = require('./db');
 
 const links = {
-  'dl': 'https://www.dedicatedbrand.com/en/men/all-men'
+  'dl': 'https://www.dedicatedbrand.com/en/men/all-men',
+  'ml': 'https://www.montlimart.com/toute-la-collection.html?limit=all',
+  'al': 'https://adresse.paris/630-toute-la-collection'
 }
 
 async function sandbox (eshop) {
   try {
     console.log(`🕵️‍♀️ browsing listed sources`);
     const products = await dedicatedbrand.scrape(links['dl']);
-    const all_products = products;
+    const products2 = await montlimartbrand.scrape(links['ml']);
+    const products3 = await adressebrand.scrape(links['al']);
+    const all_products = products.concat(products2, products3);
 
     let today = (new Date()).toLocaleDateString('fr-FR');
 
