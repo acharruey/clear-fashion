@@ -17,6 +17,7 @@ const parse = data => {
         .attr('href')}`;
 
       return {
+        '_id': uuidv5(link, uuidv5.URL),
         'link': link,
         'brand': 'dedicated',
         'price': parseInt(
@@ -34,8 +35,7 @@ const parse = data => {
           .replace(/\s/g, ' '),
         'photo': $(element)
           .find('.productList-image img')
-          .attr('src'),
-        '_id': uuidv5(link, uuidv5.URL)
+          .attr('src')
       };
     })
     .get();
