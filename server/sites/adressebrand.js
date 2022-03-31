@@ -16,10 +16,7 @@ const { 'v5': uuidv5 } = require('uuid');
           .attr('href');
         if (link != null && link != undefined) {
           return {
-<<<<<<< HEAD
             '_id': uuidv5(link, uuidv5.URL),
-=======
->>>>>>> d7b9c60b588b755b7423e67cb86c6216c7bc5f1e
             'link': link,
             'brand': 'ADRESSE Paris',
             'price': parseFloat(
@@ -35,12 +32,7 @@ const { 'v5': uuidv5 } = require('uuid');
               .attr('title'),
             'photo': $(element)
               .find('.left-block .product-image-container .product_img_link img')
-<<<<<<< HEAD
               .attr('data-original')
-=======
-              .attr('data-original'),
-            'id': uuidv5(link, uuidv5.URL)
->>>>>>> d7b9c60b588b755b7423e67cb86c6216c7bc5f1e
           };
         }
         else {

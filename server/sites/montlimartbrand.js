@@ -14,10 +14,7 @@ const parse = data => {
         .find('.product-info .product-name a')
         .attr('href');
       return {
-<<<<<<< HEAD
         '_id': uuidv5(link, uuidv5.URL),
-=======
->>>>>>> d7b9c60b588b755b7423e67cb86c6216c7bc5f1e
         'link': link,
         'brand': 'montlimart',
         'price': parseFloat(
@@ -33,12 +30,7 @@ const parse = data => {
           .attr('title'),
         'photo': $(element)
           .find('.product-image img')
-<<<<<<< HEAD
           .attr('src')
-=======
-          .attr('src'),
-        'id': uuidv5(link, uuidv5.URL)
->>>>>>> d7b9c60b588b755b7423e67cb86c6216c7bc5f1e
       };
     })
     .get();
