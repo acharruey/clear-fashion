@@ -35,7 +35,12 @@ const parse = data => {
           .replace(/\s/g, ' '),
         'photo': $(element)
           .find('.productList-image img')
+<<<<<<< HEAD
           .attr('src')
+=======
+          .attr('src'),
+        'id': uuidv5(link, uuidv5.URL)
+>>>>>>> d7b9c60b588b755b7423e67cb86c6216c7bc5f1e
       };
     })
     .get();
